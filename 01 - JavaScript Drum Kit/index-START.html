@@ -59,6 +59,69 @@
 
 <script>
 
+  let nodeList = document.querySelectorAll('.key');
+  let audioList = document.querySelectorAll('audio');
+
+  document.addEventListener('keydown', (e) => {
+    addClass(e, nodeList); playSound(e, nodeList, audioList);
+  });
+
+  document.addEventListener('keyup', (e) => {
+    removeClass(e, nodeList); stopSound(e, nodeList, audioList);
+  });
+
+  function addClass(e, nodeList) {
+    nodeList.forEach((node) => {
+      if (e.key.toString().toUpperCase() == node.firstElementChild.textContent) {
+        node.classList.add('playing');
+      };
+    });
+  };
+
+  function removeClass(e, nodeList) {
+    nodeList.forEach((node) => {
+      if (e.key.toString().toUpperCase() == node.firstElementChild.textContent) {
+        node.classList.remove('playing');
+      };
+    });
+  };
+
+  function playSound (e, nodeList, audioList) {
+    // get reference of element corresponding to key
+    let element = null;
+    nodeList.forEach((node) => {
+      if (e.key.toString().toUpperCase() == node.firstElementChild.textContent) {
+        element = node;
+        // console.log(element);
+      };
+    });
+
+    // find specified audio element and play it
+    audioList.forEach((sound) => {
+      if (element.attributes[0].value == sound.getAttribute('data-key')) {
+        sound.load();
+        sound.play();
+      };
+    });
+  };
+  
+  function stopSound (e, nodeList, audioList) {
+    // get reference of element corresponding to key
+    let element = null;
+    nodeList.forEach((node) => {
+      if (e.key.toString().toUpperCase() == node.firstElementChild.textContent) {
+        element = node;
+        // console.log(element);
+      };
+    });
+
+    // find specified audio element and play it
+    audioList.forEach((sound) => {
+      if (element.attributes[0].value == sound.getAttribute('data-key')) {
+        sound.pause();
+      };
+    });
+  };
 </script>
 
 
